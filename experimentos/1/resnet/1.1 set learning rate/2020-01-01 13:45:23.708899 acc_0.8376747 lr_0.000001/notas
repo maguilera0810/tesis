@@ -1,0 +1,28 @@
+TRAIN_DIR = paths.data_training
+VALIDATION_DIR = paths.data_validation
+BATCH_SIZE = 100  # 25
+HEIGHT = 255
+WIDTH = 255
+NUM_EPOCHS = 3  # 5
+class_list = ["anomalous", "normal"]
+#FC_LAYERS = [1024, 1024]
+FC_LAYERS = [1000]  # cambio-------------------#
+dropout = 0.4
+LEARNING_RATE = 0.000001
+
+Epoch 1/3
+642/642 [==============================] - 9732s 15s/step - loss: 0.7249 - accuracy: 0.7309 - val_loss: 0.5020 - val_accuracy: 0.7746
+{'val_loss': 0.5019758343696594, 'val_accuracy': 0.7745679020881653, 'loss': 0.724905977383096, 'accuracy': 0.7309084}
+/home/mauss/.local/lib/python3.6/site-packages/keras/callbacks/callbacks.py:707: RuntimeWarning: Can save best model only with acc available, skipping.
+  'skipping.' % (self.monitor), RuntimeWarning)
+Epoch 2/3
+642/642 [==============================] - 9718s 15s/step - loss: 0.4541 - accuracy: 0.8108 - val_loss: 0.4692 - val_accuracy: 0.7952
+{'val_loss': 0.4692385792732239, 'val_accuracy': 0.7951822280883789, 'loss': 0.4539191546999355, 'accuracy': 0.81075305}
+Epoch 3/3
+642/642 [==============================] - 9717s 15s/step - loss: 0.3765 - accuracy: 0.8377 - val_loss: 0.5059 - val_accuracy: 0.8054
+{'val_loss': 0.5059441924095154, 'val_accuracy': 0.8054168820381165, 'loss': 0.3764318906659568, 'accuracy': 0.8376747}
+{'val_loss': [0.5019758343696594, 0.4692385792732239, 0.5059441924095154], 'val_accuracy': [0.7745679020881653, 0.7951822280883789, 0.8054168820381165], 'loss': [0.724905977383096, 0.4539191546999355, 0.3764318906659568], 'accuracy': [0.7309084, 0.81075305, 0.8376747]}
+//////////////////////////----I N I C I O -----///    2020-01-01 13:45:10.287362
+8:06:21.381613
+//////////////////////////------- F I N -------///    2020-01-01 21:51:31.668975
+

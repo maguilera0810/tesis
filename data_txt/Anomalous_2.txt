@@ -1,0 +1,150 @@
+Abuse001_x264.mp4 0 7 4
+Abuse002_x264.mp4 0 1 25  
+Abuse003_x264.mp4 No Util
+Abuse004_x264.mp4 No Util
+Abuse005_x264.mp4 0 24 6
+Abuse006_x264.mp4 0 10 130
+Abuse007_x264.mp4 0 2 2
+Abuse008_x264.mp4 0 148 4 155 120
+Abuse009_x264.mp4 1 0 8 8 3
+Abuse010_x264.mp4 0 3 24
+Abuse011_x264.mp4 1 0 10 12 5 30 10 45 14 80 10 (tambien hay que recortar los ultimos 7 segundos  pero nose que poner  :v)
+Abuse012_x264.mp4 No Util
+Abuse013_x264.mp4 0 2 13 22 10 135 20 
+Abuse014_x264.mp4 0 40 6
+Abuse015_x264.mp4 1 0 35 95 10 200 40
+Abuse016_x264.mp4 0 13 27
+Abuse017_x264.mp4 0 8 3 18 3 28 8
+Abuse018_x264.mp4 0 54 3 70 10
+Abuse019_x264.mp4 No Util
+Abuse020_x264.mp4 No Util
+Abuse021_x264.mp4 No Util
+Abuse022_x264.mp4 0 5 20 35 20
+Abuse023_x264.mp4 0 5 27 
+Abuse024_x264.mp4 0 18 5 25 5
+Abuse025_x264.mp4 0 1 20 40 25
+Abuse026_x264.mp4 0 4 25
+Abuse027_x264.mp4 0 55 60
+Abuse028_x264.mp4 0 5 3
+Abuse029_x264.mp4 No Util
+Abuse030_x264.mp4 0 42 5
+Abuse031_x264.mp4 0 20 60 90 58
+Abuse032_x264.mp4 No Util
+Abuse033_x264.mp4 1 88 6 50 15 70 18
+Abuse034_x264.mp4 No Util
+Abuse035_x264.mp4 0 1 39 65 20
+Abuse036_x264.mp4 No Util
+Abuse037_x264.mp4 0 5 6
+Abuse038_x264.mp4 0 8 16
+Abuse039_x264.mp4 0 380 80
+Abuse040_x264.mp4 No Util
+Abuse041_x264.mp4 No Util
+Abuse042_x264.mp4 No Util
+Abuse043_x264.mp4 1 0 10 80 10 100 20
+Abuse044_x264.mp4 No Util
+Abuse045_x264.mp4 0 30 30 130 5
+Abuse046_x264.mp4 1 0 4 5 32
+Abuse047_x264.mp4 No Util
+Abuse048_x264.mp4 No Util
+Abuse049_x264.mp4 No Util
+Abuse050_x264.mp4 0 50 105
+Arrest001_x264.mp4 0 35 15
+Arrest002_x264.mp4 0 8 47
+Arrest003_x264.mp4 0 20 15 40 15
+Arrest004_x264.mp4 0 20 100
+Arrest005_x264.mp4 0 10 90
+Arrest006_x264.mp4 0 30 70
+Arrest007_x264.mp4 1 0 8 50 20
+Arrest008_x264.mp4 No Util
+Arrest009_x264.mp4 0 28 25
+Arrest010_x264.mp4 No Util
+Arrest011_x264.mp4 0 20 50
+Arrest012_x264.mp4 No Util
+Arrest013_x264.mp4 No Util
+Arrest014_x264.mp4 No Util
+Arrest015_x264.mp4 No Util
+Arrest016_x264.mp4 0 40 20
+Arrest017_x264.mp4 0 35 20
+Arrest018_x264.mp4 No Util
+Arrest019_x264.mp4 0 10 12
+Arrest020_x264.mp4 No Util
+Arrest021_x264.mp4 1 0 8 60 230
+Arrest022_x264.mp4 0 15 38
+Arrest023_x264.mp4 0 5 56
+Arrest024_x264.mp4 0 30 90
+Arrest025_x264.mp4 0 10 26
+Arrest026_x264.mp4 0 25 190
+Arrest027_x264.mp4 No Util
+Arrest028_x264.mp4 No Util
+Arrest029_x264.mp4 No Util
+Arrest030_x264.mp4 0 180 108
+Arrest031_x264.mp4 No Util
+Arrest032_x264.mp4 0 22 15
+Arrest033_x264.mp4 No Util
+Arrest034_x264.mp4 0 1 360
+Arrest035_x264.mp4 0 130 75
+Arrest036_x264.mp4 0 30 95
+Arrest037_x264.mp4 0 10 60
+Arrest038_x264.mp4 0 15 45
+Arrest039_x264.mp4 No Util
+Arrest040_x264.mp4 No Util
+Arrest041_x264.mp4 0 17 110
+Arrest042_x264.mp4 No Util
+Arrest043_x264.mp4 70  200
+Arrest044_x264.mp4 No Util
+Arrest046_x264.mp4 No Util
+Arrest047_x264.mp4 No Util
+Arrest048_x264.mp4 0 30 100
+Arrest049_x264.mp4 0 100 150
+Arrest050_x264.mp4 No Util
+Arrest051_x264.mp4 No Util
+Assault001_x264.mp4 4 16
+Assault002_x264.mp4 5 60
+Assault003_x264.mp4 10 45
+Assault004_x264.mp4 23 70
+Assault005_x264.mp4 15 20
+Assault006_x264.mp4 39 65
+Assault007_x264.mp4 20 100000
+Assault008_x264.mp4 20 100000
+Assault009_x264.mp4 14 41
+Assault010_x264.mp4 13 20
+Assault011_x264.mp4 13 20
+Assault012_x264.mp4 10 5
+Assault013_x264.mp4 10 30
+Assault014_x264.mp4 10 20
+Assault015_x264.mp4 15 25
+Assault016_x264.mp4 15 45
+Assault017_x264.mp4 30 10
+Assault018_x264.mp4 1 2
+Assault019_x264.mp4 30 20
+Assault020_x264.mp4 45 20
+Assault021_x264.mp4 20 10
+Assault022_x264.mp4 10 10
+Assault023_x264.mp4 80 10
+Assault024_x264.mp4 20 20
+Assault025_x264.mp4 1 10
+Assault026_x264.mp4 1 10
+Assault027_x264.mp4 1 10
+Assault028_x264.mp4 1 10
+Assault029_x264.mp4 1 10
+Assault030_x264.mp4 20 20
+Assault031_x264.mp4 6 10
+Assault032_x264.mp4 5 5
+Assault033_x264.mp4 20 20
+Assault034_x264.mp4 50 5
+Assault035_x264.mp4 2 25
+Assault036_x264.mp4 2 25
+Assault037_x264.mp4 10 15
+Assault038_x264.mp4 2 1000000
+Assault039_x264.mp4 4 4
+Assault040_x264.mp4 4 4
+Assault041_x264.mp4 4 4
+Assault042_x264.mp4 4 4
+Assault043_x264.mp4 4 4
+Assault044_x264.mp4 4 4
+Assault045_x264.mp4 4 4
+Assault046_x264.mp4 4 4
+Assault047_x264.mp4 4 4
+Assault048_x264.mp4 4 4
+Assault049_x264.mp4 4 4
+Assault050_x264.mp4 4 4
