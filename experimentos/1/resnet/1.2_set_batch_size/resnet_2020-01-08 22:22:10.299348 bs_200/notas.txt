@@ -1,0 +1,49 @@
+
+TRAIN_DIR = paths.data_training
+VALIDATION_DIR = paths.data_validation
+BATCH_SIZE = 200  # 25
+HEIGHT = 255
+WIDTH = 255
+NUM_EPOCHS = 3  # 5
+class_list = ["anomalous", "normal"]
+#FC_LAYERS = [1024, 1024]
+FC_LAYERS = [1000]  # cambio-------------------#
+dropout = 0.4
+LEARNING_RATE = 0.00001#0.000001 #0.00001
+
+
+Found 73012 images belonging to 2 classes.
+Found 8112 images belonging to 2 classes.
+366 2 200 255
+WARNING:tensorflow:From /home/mauss/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+Epoch 1/3
+/home/mauss/.local/lib/python3.6/site-packages/keras/utils/data_utils.py:616: UserWarning: The input 58 could not be retrieved. It could be because a worker has died.
+  UserWarning)
+2020-01-08 22:23:05.583301: W tensorflow/core/framework/allocator.cc:107] Allocation of 838860800 exceeds 10% of system memory.
+2020-01-08 22:23:07.430106: W tensorflow/core/framework/allocator.cc:107] Allocation of 865280000 exceeds 10% of system memory.
+2020-01-08 22:23:07.927683: W tensorflow/core/framework/allocator.cc:107] Allocation of 838860800 exceeds 10% of system memory.
+2020-01-08 22:23:08.328017: W tensorflow/core/framework/allocator.cc:107] Allocation of 838860800 exceeds 10% of system memory.
+2020-01-08 22:23:09.632409: W tensorflow/core/framework/allocator.cc:107] Allocation of 838860800 exceeds 10% of system memory.
+321/321 [==============================] - 9659s 30s/step - loss: 0.4741 - accuracy: 0.8167 - val_loss: 0.3937 - val_accuracy: 0.8161
+{'val_loss': 0.3937363922595978, 'val_accuracy': 0.8161249756813049, 'loss': 0.47364474397886175, 'accuracy': 0.816675}
+/home/mauss/.local/lib/python3.6/site-packages/keras/callbacks/callbacks.py:707: RuntimeWarning: Can save best model only with acc available, skipping.
+  'skipping.' % (self.monitor), RuntimeWarning)
+Epoch 2/3
+321/321 [==============================] - 9435s 29s/step - loss: 0.2822 - accuracy: 0.8796 - val_loss: 0.4349 - val_accuracy: 0.8340
+{'val_loss': 0.4348885416984558, 'val_accuracy': 0.8340495228767395, 'loss': 0.2810777192830011, 'accuracy': 0.8795695}
+Epoch 3/3
+321/321 [==============================] - 9421s 29s/step - loss: 0.2426 - accuracy: 0.8989 - val_loss: 0.4079 - val_accuracy: 0.8290
+{'val_loss': 0.4079267978668213, 'val_accuracy': 0.8289939165115356, 'loss': 0.24253980894651309, 'accuracy': 0.89887834}
+{'val_loss': [0.3937363922595978, 0.4348885416984558, 0.4079267978668213], 'val_accuracy': [0.8161249756813049, 0.8340495228767395, 0.8289939165115356], 'loss': [0.47364474397886175, 0.2810777192830011, 0.24253980894651309], 'accuracy': [0.816675, 0.8795695, 0.89887834]}
+//////////////////////////----I N I C I O -----///    2020-01-08 22:21:45.563185
+Duracion:   7:55:39.824820
+//////////////////////////------- F I N -------///    2020-01-09 06:17:25.388005
+steps train  321
+steps val  40
+////////////////////////+++++++++++++++++++
+epochs_data
+0.816675 0.8161249756813049 0.47364474397886175 0.3937363922595978
+0.8795695 0.8340495228767395 0.2810777192830011 0.4348885416984558
+0.89887834 0.8289939165115356 0.24253980894651309 0.4079267978668213
+
