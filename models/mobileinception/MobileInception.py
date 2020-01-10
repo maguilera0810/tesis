@@ -1,6 +1,8 @@
-from keras.applications.resnet50 import ResNet50, preprocess_input
+from keras.applications.mobilenet import MobileNet
+from keras.applications.inception_v3 import InceptionV3, preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
-from keras.layers import Dense, Activation, Flatten, Dropout
+from keras.layers import Dense, Activation, Flatten, Dropout, Input, Concatenate, Reshape
+from keras.layers.recurrent import LSTM, SimpleRNN
 from keras.models import Sequential, Model
 from keras.optimizers import SGD, Adam
 from keras.callbacks import ModelCheckpoint, CSVLogger, TensorBoard, BaseLogger, Callback, LambdaCallback
@@ -27,14 +29,14 @@ print("//////////////////////////----I N I C I O -----///   ", inicio)
 TRAIN_DIR = paths.data_training
 VALIDATION_DIR = paths.data_validation
 BATCH_SIZE = 100  # 25
-HEIGHT = 255
-WIDTH = 255
+HEIGHT = 224
+WIDTH = 224
 NUM_EPOCHS = 3  # 5
 class_list = ["anomalous", "normal"]
-#FC_LAYERS = [1024, 1024]
-FC_LAYERS = [1000]  # cambio-------------------#
-dropout = 0.4
-LEARNING_RATE = 0.0001#0.000001 #0.00001
+# FC_LAYERS = [1024, 1024]
+FC_LAYERS = [2048,1024]  # cambio-------------------#
+dropout = 0.5
+LEARNING_RATE = 0.0001  # 0.000001 #0.00001
 # num_train_images = 45215
 # num_validation_images = 5023
 
@@ -46,9 +48,17 @@ num_validation_images = len([file for file in os.listdir(paths.data_validation_a
 print("steps train ", num_train_images, num_train_images // BATCH_SIZE)
 print("steps val ", num_validation_images, num_validation_images // BATCH_SIZE)
 
-base_model = ResNet50(weights='imagenet',
-                      include_top=False,
-                      input_shape=(HEIGHT, WIDTH, 3))
+ 
+
+
+base_model_1 = MobileNet(weights='imagenet',
+                         include_top=False,
+                         input_shape=(HEIGHT, WIDTH, 3))
+
+
+base_model_2 = InceptionV3(
+    weights='imagenet', include_top=False, input_shape=(HEIGHT, WIDTH, 3))
+
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_input,
@@ -64,7 +74,6 @@ validation_datagen = ImageDataGenerator(
     vertical_flip=True
 )
 
-
 train_generator = train_datagen.flow_from_directory(TRAIN_DIR,
                                                     target_size=(
                                                         HEIGHT, WIDTH),
@@ -74,70 +83,58 @@ validation_generator = validation_datagen.flow_from_directory(VALIDATION_DIR,
                                                                   HEIGHT, WIDTH),
                                                               batch_size=BATCH_SIZE)
 
-print(len(train_generator), len(train_generator[0]), len(
-    train_generator[0][0]), len(train_generator[0][0][0]))
 
 
-def build_finetune_model(base_model, dropout, fc_layers, num_classes):
-    for layer in base_model.layers:
-        layer.trainable = False
+def MobileInception(base_model_1=None,
+                    base_model_2=None,
+                    input_shape=None,
+                    num_classes=2):
+    img_input = Input(shape=input_shape)
 
-    x = base_model.output
-    x = Flatten()(x)
-    for fc in fc_layers:
-        # New FC layer, random init
-        x = Dense(fc, activation='relu')(x)  # ----------------cambio
-        #x = Dense(fc, activation='relu')(x)
-        x = Dropout(dropout)(x)
+    base_model_1.layers.pop(0)
+    base_model_1(img_input)
 
-    # New softmax layer
-    predictions = Dense(num_classes, activation='softmax')(x)
+    base_model_2.layers.pop(0)
+    base_model_2(img_input)
 
-    finetune_model = Model(inputs=base_model.input, outputs=predictions)
+    x1 = base_model_1.get_output_at(-1)
+    x2 = base_model_2.get_output_at(-1)
+    x1 = Flatten()(x1)
+    x2 = Flatten()(x2)
+    x = Concatenate()([x1, x2])
+    x = Dense(2048, activation='relu')(x)
+    x = Dropout(dropout)(x)
+    x = Dense(1024, activation='relu')(x)
+    x = Dropout(dropout)(x)
+    predictions = Dense(num_classes, activation="softmax")(x)
 
-    return finetune_model
+    model = Model(inputs=img_input, outputs=predictions)
+
+    return model
 
 
-finetune_model = build_finetune_model(base_model,
-                                      dropout=dropout,
-                                      fc_layers=FC_LAYERS,
-                                      num_classes=len(class_list))
+finetune_model = MobileInception(
+    base_model_1=base_model_2, base_model_2=base_model_1, input_shape=(HEIGHT, WIDTH, 3), num_classes=2)
+
+
+
 
 adam = Adam(lr=LEARNING_RATE)  # adam = Adam(lr=0.00001)
 finetune_model.compile(
     adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
-filepath = "./checkpoints/" + "ResNet50" + "_model_weights.h5"
+filepath = "./checkpoints/" + "MobileInception" + "_model_weights.h5"
 checkpoint = ModelCheckpoint(
     filepath, monitor="acc", verbose=1, mode='max', save_best_only=True)
 
-# csv logger
-
-csv_logger = CSVLogger("./csvlog/" + "ResNet50" + 'training.log')
 filepath_batch = paths.batch_data
 filepath_epoch = paths.epoch_data
-batchdata = BatchData(filepath_batch, filepath_epoch,"resnet")
-#file = open(f"./batchs_data/dia_{datetime.now()}txt","a")
-
-""" lambdacallback = LambdaCallback(
-    #on_epoch_begin=lambda epoch, logs: leerfile(epoch),
-    #on_epoch_end=lambda epoch, logs: file.close(),
-    on_batch_begin=lambda batch, logs: print("on_batch_begin",batch,logs),
-    on_batch_end=lambda batch, logs: file.write(str(logs.get("accuracy"))+"\t"+str(logs.get("loss"))+"\n"),
-    on_train_end=lambda logs: file.close()
-) """
-
-
-#tensorboard = TensorBoard()
-#batchedtensorboard = BatchedTensorBoard()
-#baselogger = BaseLogger(stateful_metrics="on_batch_end")
+batchdata = BatchData(filepath_batch, filepath_epoch,"mobileinception")
 
 callbacks_list = [
-    batchdata,
-    # lambdacallback,
+    batchdata,    
     checkpoint
-    # csv_logger,
-    # tensorboard
+
 ]
 
 
@@ -150,6 +147,7 @@ history = finetune_model.fit_generator(
     validation_data=validation_generator,
     validation_steps=num_validation_images//BATCH_SIZE
 )
+
 
 
 fin = datetime.now()
@@ -180,3 +178,4 @@ print("////////////////////////+++++++++++++++++++")
 GuardarEpocas(history,"resnet")
 print("////////////////////////-------------------")
 Plot(history)
+

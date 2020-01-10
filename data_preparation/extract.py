@@ -5,8 +5,8 @@ import numpy as np
 import DataAugmentation as daug
 import rutas_data_preparation as rt
 
-IMAGE_WIDTH = 255
-IMAGE_HEIGHT = 255
+IMAGE_WIDTH = 224
+IMAGE_HEIGHT = 224
 
 cwd = ".."
 
