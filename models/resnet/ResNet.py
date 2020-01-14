@@ -26,10 +26,10 @@ print("//////////////////////////----I N I C I O -----///   ", inicio)
 
 TRAIN_DIR = paths.data_training
 VALIDATION_DIR = paths.data_validation
-BATCH_SIZE = 300#200  # 25
-HEIGHT = 255
-WIDTH = 255
-NUM_EPOCHS = 3  # 5
+BATCH_SIZE = 100 #200  # 25
+HEIGHT = 224
+WIDTH = 224
+NUM_EPOCHS = 10  # 5
 class_list = ["anomalous", "normal"]
 #FC_LAYERS = [1024, 1024]
 FC_LAYERS = [1000]  # cambio-------------------#

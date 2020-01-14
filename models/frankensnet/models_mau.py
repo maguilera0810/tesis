@@ -8,6 +8,7 @@ import os
 from keras import layers
 from keras import backend
 from keras import models
+from keras.regularizers import l2
 #from keras.applications.imagenet_utils import _obtain_input_shape
 from keras.applications.imagenet_utils import decode_predictions
 from keras.applications import imagenet_utils
@@ -145,7 +146,7 @@ def InceptionModel_B(x,i):
     x = layers.concatenate(
         [branch1x1, branch7x7, branch7x7dbl, branch_pool],
         axis=3,
-        name='mixed' + str(9 + i))
+        name='mixed_b_' + str(9 + i))
     return x
 
 
@@ -173,7 +174,7 @@ def InceptionModel_C(x,i):
     x = layers.concatenate(
         [branch1x1, branch3x3, branch3x3dbl, branch_pool],
         axis=3,
-        name='mixed' + str(9 + i))
+        name='mixed_c_' + str(9 + i))
     return x
 
 
@@ -196,7 +197,84 @@ def GridReduction(x):
     return x
 
 
+def aux_clasifier(x,classes = 2):
+    x = layers.AveragePooling2D(pool_size=(2,2), strides=(1,1), name='loss1/ave_pool')(x)
+    x = layers.Conv2D(128, (1,1), padding='same', activation='relu', name='loss1/conv')(x)
+    x = layers.Flatten()(x)
+    x = layers.Dense(1024, activation='relu', name='loss1/fc')(x)
+    x = layers.Dropout(rate=0.7)(x)
+    x = layers.Dense(classes, name='loss1/classifier')(x)
+    x = layers.Activation('softmax')(x)
+    return x
+
 def FrankensNet(blocks=[6, 12, 24, 16], input_shape=None, classes=2):
+    img_input = layers.Input(shape=input_shape)
+
+    bn_axis = 3 
+
+    x = layers.ZeroPadding2D(padding=((3, 3), (3, 3)))(img_input)
+    x = layers.Conv2D(64, 7, strides=2, use_bias=False, name='conv1/conv')(x)
+    x = layers.BatchNormalization(
+        axis=bn_axis, epsilon=1.001e-5, name='conv1/bn')(x)
+    x = layers.Activation('relu', name='conv1/relu')(x)
+    x = layers.ZeroPadding2D(padding=((1, 1), (1, 1)))(x)
+    x = layers.MaxPooling2D(3, strides=2, name='pool1')(x)
+
+    x = dense_block(x, blocks[0], name='conv2')
+    x = transition_block(x, 0.5, name='pool2')
+    x = dense_block(x, blocks[1], name='conv3')
+    x = transition_block(x, 0.5, name='pool3')
+    x = dense_block(x, blocks[2], name='conv4')
+    x = transition_block(x, 0.5, name='pool4')
+    x = dense_block(x, blocks[3], name='conv5')
+
+    x = layers.BatchNormalization(
+        axis=bn_axis, epsilon=1.001e-5, name='bn')(x)
+
+    #loss1_clasifier_act = aux_clasifier(x=x,classes=classes)
+    #x = layers.MaxPooling2D(name='max_pool_0')(x)
+
+    branch_1 = InceptionModel_B(x,1)
+    branch_1 = InceptionModel_B(branch_1,2)
+    branch_1 = InceptionModel_B(branch_1,3)
+    branch_1 = layers.MaxPooling2D(name='max_pool_1')(branch_1)
+    branch_1 = InceptionModel_C(branch_1,1)
+
+    branch_2 = InceptionModel_B(x,4)
+    branch_2 = layers.MaxPooling2D(name='max_pool_2')(branch_2)
+    branch_2 = InceptionModel_C(branch_2,2)
+    branch_2 = InceptionModel_C(branch_2,3)
+    branch_2 = InceptionModel_C(branch_2,4)
+
+    branch_3 = InceptionModel_B(x,5)
+    branch_3 = InceptionModel_B(branch_3,6)
+    branch_3 = layers.MaxPooling2D(name='max_pool_3')(branch_3)
+    branch_3 = InceptionModel_C(branch_3,5)
+    branch_3 = InceptionModel_C(branch_3,6)
+    
+    branches = layers.Concatenate()([branch_1,branch_2,branch_3])
+
+    #x1 = layers.Conv2D(128,3)(x)
+    #x1 = layers.Conv2D(128,3)(x1)
+    #x1 = layers.MaxPooling2D(name='max_pool_5')(x1)
+    #x1 = layers.Flatten()(x1)
+
+    x = layers.MaxPooling2D(name='max_pool_6')(branches)
+    x = layers.Flatten()(x)
+    #x = layers.Concatenate()([x,x1])
+    x = layers.Dense(2048, activation='relu', name='fc1')(x)
+    x = layers.Dropout(0.5)(x)
+    x = layers.Dense(1024, activation='relu', name='fc2')(x)
+    x = layers.Dropout(0.5)(x)
+    predictions = layers.Dense(2, activation='softmax', name='predictions')(x)
+
+    model = models.Model(inputs = img_input, outputs = [predictions], name='frankensnet')
+
+
+    return model
+
+
+def FrankensNet1(blocks=[6, 12, 24, 16], input_shape=None, classes=2):
     img_input = layers.Input(shape=input_shape)
     inputs = img_input
 
@@ -220,7 +298,11 @@ def FrankensNet(blocks=[6, 12, 24, 16], input_shape=None, classes=2):
 
     x = layers.BatchNormalization(
         axis=bn_axis, epsilon=1.001e-5, name='bn')(x)
-    #x = GridReduction(x)
+    x = layers.MaxPooling2D(name='max_pool_0')(x)
+
+
+
+    
     x = InceptionModel_B(x,1)
     x = InceptionModel_B(x,2)
     x = layers.MaxPooling2D(name='max_pool_1')(x)
@@ -228,6 +310,7 @@ def FrankensNet(blocks=[6, 12, 24, 16], input_shape=None, classes=2):
     x = InceptionModel_C(x,3)
     x = InceptionModel_C(x,4)
     x = layers.MaxPooling2D(name='max_pool_2')(x)
+    x = layers.Flatten()(x)
     x = layers.Dense(2048, activation='relu', name='fc1')(x)
     x = layers.Dropout(0.5)(x)
     x = layers.Dense(1024, activation='relu', name='fc2')(x)
@@ -235,5 +318,6 @@ def FrankensNet(blocks=[6, 12, 24, 16], input_shape=None, classes=2):
     x = layers.Dense(2, activation='softmax', name='predictions')(x)
 
     model = models.Model(inputs, x, name='frankensnet')
+
 
     return model
