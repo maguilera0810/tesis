@@ -117,17 +117,17 @@ class Data_augmentation:
             sigma=5,
             strength=0.8
         )
-        #img_crop = self.rotate(img, 0, 1.1)
-        #img_rot = self.rotate(img, 4, 1.2)
-        #img_rot2 = self.rotate(img, -4, +1.2)
+        img_crop = self.rotate(img, 0, 1.1)
+        img_rot = self.rotate(img, 4, 1.2)
+        img_rot2 = self.rotate(img, -4, +1.2)
 
         cv2.imwrite(os.path.join(save_path, str(i)+'.jpg'), img)
-        #cv2.imwrite(os.path.join(save_path, str(i + 1)+'.jpg'), img_crop)
-        #cv2.imwrite(os.path.join(save_path, str(i + 2)+'.jpg'), img_rot)
-        #cv2.imwrite(os.path.join(save_path, str(i + 3)+'.jpg'), img_rot2)
+        cv2.imwrite(os.path.join(save_path, str(i + 1)+'.jpg'), img_crop)
+        cv2.imwrite(os.path.join(save_path, str(i + 2)+'.jpg'), img_rot)
+        cv2.imwrite(os.path.join(save_path, str(i + 3)+'.jpg'), img_rot2)
 
 
 def img_aug(root, img, output_path, i):
     raw_image = Data_augmentation(root, img)
     raw_image.image_augment(output_path, i)
-    return 1
+    return 4

@@ -155,7 +155,7 @@ def frames(aug=False, cant=-1):
         paths.anomalous_training_data_txt
     )
     conta_a, conta_n = 0, 0
-    nfn, nfa = 1,2#3, 14  # 2, 14
+    nfn, nfa = 3,6#3, 14  # 2, 14
     print("..................................................................................\nExtrayendo Frames Anomalous")
     for i, video in enumerate(l_a):
         if i + 1 > cant and cant != -1:
