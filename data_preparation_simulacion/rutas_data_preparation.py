@@ -49,9 +49,6 @@ class Directorios():
             self.data_validation, "anomalous")
         self.data_validation_normal = os.path.join(
             self.data_validation, "normal")
-        # -------------------DATA BATCHS EPOCHS----------------------------
-        self.batch_data = "batchs_data"
-        self.epoch_data = "epochs_data"
 
 
 # ----------------------------------------------

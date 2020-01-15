@@ -1,5 +1,4 @@
-from keras.applications.mobilenet import MobileNet
-from keras.applications.inception_v3 import InceptionV3, preprocess_input
+from keras.applications.densenet import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import Dense, Activation, Flatten, Dropout, Input, Concatenate, Reshape
 from keras.layers.recurrent import LSTM, SimpleRNN
@@ -29,18 +28,19 @@ print("//////////////////////////----I N I C I O -----///   ", inicio)
 
 TRAIN_DIR = paths.data_training
 VALIDATION_DIR = paths.data_validation
-BATCH_SIZE = 30  # 25
+BATCH_SIZE = 100  # 25
 HEIGHT = 224
 WIDTH = 224
-NUM_EPOCHS = 1 # 5
+NUM_EPOCHS = 3 # 5
 class_list = ["anomalous", "normal"]
 # FC_LAYERS = [1024, 1024]
-FC_LAYERS = [2048, 1024]  # cambio-------------------#
+FC_LAYERS = [1024]#[2048, 1024]  # cambio-------------------#
 dropout = 0.5
 LEARNING_RATE = 0.0001  # 0.000001 #0.00001
 # num_train_images = 45215
 # num_validation_images = 5023
-if True:
+prueba = True
+if prueba:
     num_train_images = len([file for file in os.listdir(paths.data_training_normal)]) + \
         len([file for file in os.listdir(paths.data_training_normal)])
     num_validation_images = len([file for file in os.listdir(paths.data_validation_anomalous)]) + \
@@ -74,15 +74,38 @@ if True:
                                                                 batch_size=BATCH_SIZE)
 
 
-frankens_model = FrankensNet(
-    blocks=[6, 12, 24, 16], input_shape=(HEIGHT, WIDTH, 3), classes=2)
+frankens_model = FrankensNet(input_shape=(HEIGHT, WIDTH, 3), classes=2)
+    #blocks=[12, 24, 16, 32], input_shape=(HEIGHT, WIDTH, 3), classes=2)
+#frankens_model = DenseNet121(include_top=False,weights='imagenet',input_shape=(HEIGHT,WIDTH,3))
+
+def build_finetune_model(base_model, dropout, fc_layers, num_classes):
+    for layer in base_model.layers:
+        layer.trainable = False
+
+    x = base_model.output
+    x = Flatten()(x)
+    for fc in fc_layers:
+        # New FC layer, random init
+        x = Dense(fc, activation='relu')(x)  # ----------------cambio
+        #x = Dense(fc, activation='relu')(x)
+        x = Dropout(dropout)(x)
+
+    # New softmax layer
+    predictions = Dense(num_classes, activation='softmax')(x)
+
+    finetune_model = Model(inputs=base_model.input, outputs=predictions)
+
+    return finetune_model
+
+
+
 
 
 adam = Adam(lr=LEARNING_RATE)  # adam = Adam(lr=0.00001)
 frankens_model.compile(
     adam, loss='categorical_crossentropy', metrics=['accuracy'])
 frankens_model.summary()
-if True:
+if prueba:
     filepath = "./checkpoints/" + "FrankensNet" + "_model_weights.h5"
     checkpoint = ModelCheckpoint(
         filepath, monitor="acc", verbose=1, mode='max', save_best_only=True)
