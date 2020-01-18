@@ -28,7 +28,7 @@ print("//////////////////////////----I N I C I O -----///   ", inicio)
 
 TRAIN_DIR = paths.data_training
 VALIDATION_DIR = paths.data_validation
-BATCH_SIZE = 100  # 25
+BATCH_SIZE = 300  # 100
 HEIGHT = 224
 WIDTH = 224
 NUM_EPOCHS = 3 # 5
@@ -36,7 +36,7 @@ class_list = ["anomalous", "normal"]
 # FC_LAYERS = [1024, 1024]
 FC_LAYERS = [1024]#[2048, 1024]  # cambio-------------------#
 dropout = 0.5
-LEARNING_RATE = 0.0001  # 0.000001 #0.00001
+LEARNING_RATE = 0.001 # 0.00001  # 0.000001 #0.00001
 # num_train_images = 45215
 # num_validation_images = 5023
 prueba = True
@@ -104,7 +104,8 @@ def build_finetune_model(base_model, dropout, fc_layers, num_classes):
 adam = Adam(lr=LEARNING_RATE)  # adam = Adam(lr=0.00001)
 frankens_model.compile(
     adam, loss='categorical_crossentropy', metrics=['accuracy'])
-frankens_model.summary()
+p = str(frankens_model.summary())
+print(p,"\n8888888888888")
 if prueba:
     filepath = "./checkpoints/" + "FrankensNet" + "_model_weights.h5"
     checkpoint = ModelCheckpoint(
@@ -142,8 +143,14 @@ if prueba:
 
 
     def GuardarEpocas(history, model_name):
-        acc = history.history['accuracy']
-        val_acc = history.history['val_accuracy']
+        try:
+            acc = history.history['accuracy']
+        except:
+            acc = history.history['acc']
+        try:
+            val_acc = history.history['val_accuracy']
+        except:
+            val_acc = history.history['val_acc']
         loss = history.history['loss']
         val_loss = history.history['val_loss']
         print(filepath_epoch)
@@ -155,6 +162,6 @@ if prueba:
 
 
     print("////////////////////////+++++++++++++++++++")
-    GuardarEpocas(history, "resnet")
+    GuardarEpocas(history, "frankensnet")
     print("////////////////////////-------------------")
     Plot(history)

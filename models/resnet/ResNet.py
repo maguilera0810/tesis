@@ -163,9 +163,15 @@ print("steps val ", num_validation_images // BATCH_SIZE)
 # Plot the training and validation loss + accuracy
 
 
-def GuardarEpocas(history,model_name):
-    acc = history.history['accuracy']
-    val_acc = history.history['val_accuracy']
+def GuardarEpocas(history, model_name):
+    try:
+        acc = history.history['accuracy']
+    except:
+        acc = history.history['acc']
+    try:
+        val_acc = history.history['val_accuracy']
+    except:
+        val_acc = history.history['val_acc']
     loss = history.history['loss']
     val_loss = history.history['val_loss']
     print(filepath_epoch)

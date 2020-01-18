@@ -31,11 +31,13 @@ class BatchData(Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         logs = logs or {}
-        #self.list_epochs.append(logs)
+        # self.list_epochs.append(logs)
         print(logs)
         for i in self.list_batchs:
-            self.file_batch.write(
-                (str(i.get("accuracy"))+"\t"+str(i.get("loss"))+"\n"))
+            acc = i.get("accuracy")
+            if acc == None:
+                i.get("acc")
+            self.file_batch.write((str(acc)+"\t"+str(i.get("loss"))+"\n"))
         self.file_batch.close()
 
     def on_batch_begin(self, batch, logs=None):

@@ -1,0 +1,55 @@
+TRAIN_DIR = paths.data_training
+VALIDATION_DIR = paths.data_validation
+BATCH_SIZE = 200  # 100
+HEIGHT = 224
+WIDTH = 224
+NUM_EPOCHS = 3 # 5
+class_list = ["anomalous", "normal"]
+# FC_LAYERS = [1024, 1024]
+FC_LAYERS = [1024]#[2048, 1024]  # cambio-------------------#
+dropout = 0.5
+LEARNING_RATE = 0.001 # 0.00001 
+
+
+
+//////////////////////////----I N I C I O -----///    2020-01-17 13:48:24.411621
+steps train  64214 321
+steps val  8112 40
+Found 73012 images belonging to 2 classes.
+Found 8112 images belonging to 2 classes.
+
+
+Total params: 99,908,226
+Trainable params: 81,499,842
+Non-trainable params: 18,408,384
+__________________________________________________________________________________________________
+None 
+8888888888888
+WARNING:tensorflow:From /home/mauss/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+Epoch 1/3
+/home/mauss/.local/lib/python3.6/site-packages/keras/utils/data_utils.py:616: UserWarning: The input 210 could not be retrieved. It could be because a worker has died.
+  UserWarning)
+321/321 [==============================] - 18547s 58s/step - loss: 0.7761 - accuracy: 0.8268 - val_loss: 0.4217 - val_accuracy: 0.8213
+{'val_loss': 0.42165493965148926, 'val_accuracy': 0.8212500214576721, 'loss': 0.7770354392353032, 'accuracy': 0.8268137}
+/home/mauss/.local/lib/python3.6/site-packages/keras/callbacks/callbacks.py:707: RuntimeWarning: Can save best model only with acc available, skipping.
+  'skipping.' % (self.monitor), RuntimeWarning)
+Epoch 2/3
+321/321 [==============================] - 18117s 56s/step - loss: 0.2568 - accuracy: 0.8885 - val_loss: 0.7161 - val_accuracy: 0.7552
+{'val_loss': 0.7161176204681396, 'val_accuracy': 0.7551820278167725, 'loss': 0.25677936203046375, 'accuracy': 0.88845843}
+Epoch 3/3
+321/321 [==============================] - 18903s 59s/step - loss: 0.2223 - accuracy: 0.9073 - val_loss: 0.6353 - val_accuracy: 0.7669
+{'val_loss': 0.635348916053772, 'val_accuracy': 0.7669363021850586, 'loss': 0.2222600100093027, 'accuracy': 0.907283}
+{'val_loss': [0.42165493965148926, 0.7161176204681396, 0.635348916053772], 'val_accuracy': [0.8212500214576721, 0.7551820278167725, 0.7669363021850586], 'loss': [0.7770354392353032, 0.25677936203046375, 0.2222600100093027], 'accuracy': [0.8268137, 0.88845843, 0.907283]}
+//////////////////////////----I N I C I O -----///    2020-01-17 13:48:24.411621
+Duracion:   15:26:53.199663
+//////////////////////////------- F I N -------///    2020-01-18 05:15:17.611284
+steps train  321
+steps val  40
+////////////////////////+++++++++++++++++++
+epochs_data
+0.8268137 0.8212500214576721 0.7770354392353032 0.42165493965148926
+0.88845843 0.7551820278167725 0.25677936203046375 0.7161176204681396
+0.907283 0.7669363021850586 0.2222600100093027 0.635348916053772
+////////////////////////-------------------
+
