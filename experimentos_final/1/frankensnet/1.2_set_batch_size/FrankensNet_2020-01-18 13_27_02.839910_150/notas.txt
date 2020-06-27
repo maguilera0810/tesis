@@ -1,0 +1,52 @@
+
+TRAIN_DIR = paths.data_training
+VALIDATION_DIR = paths.data_validation
+BATCH_SIZE = 150  # 100
+HEIGHT = 224
+WIDTH = 224
+NUM_EPOCHS = 3 # 5
+class_list = ["anomalous", "normal"]
+# FC_LAYERS = [1024, 1024]
+FC_LAYERS = [1024]#[2048, 1024]  # cambio-------------------#
+dropout = 0.5
+LEARNING_RATE = 0.001 # 0.00001  # 0.000001 #0.00001
+
+//////////////////////////----I N I C I O -----///    2020-01-18 13:26:16.693442
+steps train  64214 428
+steps val  8112 54
+Found 73012 images belonging to 2 classes.
+Found 8112 images belonging to 2 classes.
+
+
+Total params: 99,908,226
+Trainable params: 81,499,842
+Non-trainable params: 18,408,384
+__________________________________________________________________________________________________
+None 
+8888888888888
+WARNING:tensorflow:From /home/mauss/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+Epoch 1/3
+428/428 [==============================] - 18886s 44s/step - loss: 0.9785 - accuracy: 0.8216 - val_loss: 0.7571 - val_accuracy: 0.6435
+{'val_loss': 0.7571112513542175, 'val_accuracy': 0.6434568166732788, 'loss': 0.9787131633772161, 'accuracy': 0.8216234}
+/home/mauss/.local/lib/python3.6/site-packages/keras/callbacks/callbacks.py:707: RuntimeWarning: Can save best model only with acc available, skipping.
+  'skipping.' % (self.monitor), RuntimeWarning)
+Epoch 2/3
+428/428 [==============================] - 18331s 43s/step - loss: 0.2725 - accuracy: 0.8836 - val_loss: 0.5270 - val_accuracy: 0.6927
+{'val_loss': 0.5270352959632874, 'val_accuracy': 0.692665159702301, 'loss': 0.27257456756274284, 'accuracy': 0.883576}
+Epoch 3/3
+428/428 [==============================] - 18258s 43s/step - loss: 0.2322 - accuracy: 0.9043 - val_loss: 0.9863 - val_accuracy: 0.6422
+{'val_loss': 0.9863103032112122, 'val_accuracy': 0.6421753168106079, 'loss': 0.23223461405532936, 'accuracy': 0.9043359}
+{'val_loss': [0.7571112513542175, 0.5270352959632874, 0.9863103032112122], 'val_accuracy': [0.6434568166732788, 0.692665159702301, 0.6421753168106079], 'loss': [0.9787131633772161, 0.27257456756274284, 0.23223461405532936], 'accuracy': [0.8216234, 0.883576, 0.9043359]}
+//////////////////////////----I N I C I O -----///    2020-01-18 13:26:16.693442
+Duracion:   15:25:24.586168
+//////////////////////////------- F I N -------///    2020-01-19 04:51:41.279610
+steps train  428
+steps val  54
+////////////////////////+++++++++++++++++++
+epochs_data
+0.8216234 0.6434568166732788 0.9787131633772161 0.7571112513542175
+0.883576 0.692665159702301 0.27257456756274284 0.5270352959632874
+0.9043359 0.6421753168106079 0.23223461405532936 0.9863103032112122
+////////////////////////-------------------
+

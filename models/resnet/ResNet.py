@@ -29,7 +29,7 @@ VALIDATION_DIR = paths.data_validation
 BATCH_SIZE = 100 #200  # 25
 HEIGHT = 224
 WIDTH = 224
-NUM_EPOCHS = 10  # 5
+NUM_EPOCHS = 5  # 5
 class_list = ["anomalous", "normal"]
 #FC_LAYERS = [1024, 1024]
 FC_LAYERS = [1000]  # cambio-------------------#
@@ -106,10 +106,9 @@ finetune_model = build_finetune_model(base_model,
 adam = Adam(lr=LEARNING_RATE)  # adam = Adam(lr=0.00001)
 finetune_model.compile(
     adam, loss='categorical_crossentropy', metrics=['accuracy'])
-
+finetune_model.summary()
 filepath = "./checkpoints/" + "ResNet50" + "_model_weights.h5"
-checkpoint = ModelCheckpoint(
-    filepath, monitor="acc", verbose=1, mode='max', save_best_only=True)
+checkpoint = ModelCheckpoint(filepath, monitor="accuracy", verbose=1, mode='max', save_best_only=True)
 
 # csv logger
 

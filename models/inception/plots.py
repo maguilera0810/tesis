@@ -9,7 +9,6 @@ cwd = ".."
 paths = rt.Directorios(os.path.join(cwd, cwd))
 
 
-
 def suavizar(x, y):
     if len(x) > 2:
         T = np.array(x)
@@ -23,18 +22,18 @@ def suavizar(x, y):
 
 
 def ReadData():
-    #print(paths.batch_data)
+    # print(paths.batch_data)
     batchs1 = sorted(os.listdir(paths.batch_data))
-    #print(batchs1)
-    print(os.path.join(paths.batch_data,batchs1[-1]))
-    batchs2 = sorted(os.listdir(os.path.join(paths.batch_data,batchs1[-1])))
-    #print(batchs2)
+    # print(batchs1)
+    print(os.path.join(paths.batch_data, batchs1[-1]))
+    batchs2 = sorted(os.listdir(os.path.join(paths.batch_data, batchs1[-1])))
+    # print(batchs2)
     epochs = sorted(os.listdir(paths.epoch_data))
-    #print(epochs)
+    # print(epochs)
     lista_acc = []
     lista_loss = []
     for epoch in batchs2:
-        file = open(os.path.join(paths.batch_data,batchs1[-1],epoch), "r")
+        file = open(os.path.join(paths.batch_data, batchs1[-1], epoch), "r")
         lista_batch_acc = []
         lista_batch_loss = []
         for line in file:
@@ -87,8 +86,19 @@ def Multiplot(l1, tittle):
         #batchs, i = suavizar(batchs, i)
         #print(f,c,idx +1)
         plt.subplot(f, c, idx+1)
-        plt.plot(batchs, i, 'r')
-        plt.title(f'{tittle} {idx}')
+        plt.plot(batchs, i, 'r', label=tittle)
+        base_y = min(i)
+        sup_y = max(i)
+        if sup_y >= 1:
+            sup_y = 1
+        stepx = 1
+        stepy = (sup_y-base_y)/30
+        plt.xticks(np.arange(0, len(i)+stepx, stepx))
+        plt.yticks(np.arange(base_y, sup_y+stepy, stepy))
+        plt.grid()
+        plt.legend(loc='best',fontsize="xx-large")
+
+        plt.title(f'{tittle} Epoch {idx}')
 
 
 def Epoch_plot(acc, val_acc, loss, val_loss):
@@ -98,19 +108,43 @@ def Epoch_plot(acc, val_acc, loss, val_loss):
     plt.figure()
     #e, acc = suavizar(epochs, acc)
     e, acc = epochs, acc
-    plt.plot(e, acc, 'r')
+    plt.plot(e, acc, 'r', label="Accuracy")
     #e, val_acc = suavizar(epochs, val_acc)
     e, val_acc = epochs, val_acc
-    plt.plot(e, val_acc, 'g')
+    plt.plot(e, val_acc, 'g', label="Validation Accuracy")
+
+    base_y = min(min(acc), min(val_acc))
+    sup_y = max(max(acc), max(val_acc))
+    if sup_y >= 1:
+        sup_y = 1
+    stepx = 1
+    stepy = (sup_y-base_y)/30
+    plt.xticks(np.arange(0, len(acc)+stepx, stepx))
+    plt.yticks(np.arange(base_y, sup_y+stepy, stepy))
+    plt.grid()
+    plt.legend(loc='best',fontsize="xx-large")
+
     plt.title('Training(red) and validation(green) accuracy')
 
     plt.figure()
     #e, loss = suavizar(epochs, loss)
     e, loss = epochs, loss
-    plt.plot(e, loss, 'r')
+    plt.plot(e, loss, 'r', label="Loss")
     #e, val_loss = suavizar(epochs, val_loss)
     e, val_loss = epochs, val_loss
-    plt.plot(e, val_loss, 'g')
+    plt.plot(e, val_loss, 'g', label="Validation Loss")
+
+    base_y = min(min(loss), min(val_loss))
+    sup_y = max(max(loss), max(val_loss))
+    if sup_y >= 1:
+        sup_y = 1
+    stepx = 1
+    stepy = (sup_y-base_y)/30
+    plt.xticks(np.arange(0, len(acc)+stepx, stepx))
+    plt.yticks(np.arange(base_y, sup_y+stepy, stepy))
+    plt.grid()
+    plt.legend(loc='best',fontsize="xx-large")
+
     plt.title('Training(red) and validation(green) loss')
 
 
@@ -126,28 +160,49 @@ def plot_training(history):
     plt.figure()
     #e, acc = suavizar(epochs, acc)
     e, acc = epochs, acc
-    plt.plot(e, acc, 'r')
+    plt.plot(e, acc, 'r', label="Accuracy")
     #e, val_acc = suavizar(epochs, val_acc)
     e, val_acc = epochs, val_acc
-    plt.plot(e, val_acc, 'g')
+    plt.plot(e, val_acc, 'g', label="Validation Accuracy")
+    base_y = min(min(acc), min(val_acc))
+    sup_y = max(max(acc), max(val_acc))
+    if sup_y >= 1:
+        sup_y = 1
+    stepx = 0.05
+    stepy = (sup_y-base_y)/30
+    plt.xticks(np.arange(0, 1+stepx, stepx))
+    plt.yticks(np.arange(base_y, sup_y+stepy, stepy))
+    plt.grid()
+    plt.legend()
     plt.title('Training(red) and validation(green) accuracy plot')
 
     plt.figure()
     #e, loss = suavizar(epochs, loss)
     e, loss = epochs, loss
-    plt.plot(e, loss, 'r')
+    plt.plot(e, loss, 'r', label="Loss")
     #e, val_loss = suavizar(epochs, val_loss)
     e, val_loss = epochs, val_loss
-    plt.plot(e, val_loss, 'g')
+    plt.plot(e, val_loss, 'g', label="Validation Loss")
+
+    base_y = min(min(loss), min(val_loss))
+    sup_y = max(max(loss), max(val_loss))
+    if sup_y >= 1:
+        sup_y = 1
+    stepx = 0.05
+    stepy = (sup_y-base_y)/30
+    plt.xticks(np.arange(0, 1+stepx, stepx))
+    plt.yticks(np.arange(base_y, sup_y+stepy, stepy))
+    plt.grid()
+    plt.legend()
+
     plt.title('Training(red) and validation(green) plot loss')
 
 
 def main():
     lista_acc, lista_loss, lista_epoch_acc, lista_epoch_val_acc, lista_epoch_loss, lista_epoch_val_loss = ReadData()
-    Multiplot(lista_acc, tittle="Accuracy Epoch")
-    Multiplot(lista_loss, tittle="Loss Epoch")
-    Epoch_plot(lista_epoch_acc, lista_epoch_val_acc,
-               lista_epoch_loss, lista_epoch_val_loss)
+    Multiplot(lista_acc, tittle="Accuracy")
+    Multiplot(lista_loss, tittle="Loss")
+    Epoch_plot(lista_epoch_acc, lista_epoch_val_acc,lista_epoch_loss, lista_epoch_val_loss)
     plt.show()
 
 
@@ -155,7 +210,7 @@ def Plot(history):
     lista_acc, lista_loss, lista_epoch_acc, lista_epoch_val_acc, lista_epoch_loss, lista_epoch_val_loss = ReadData()
     Multiplot(lista_acc, tittle="Accuracy Epoch")
     Multiplot(lista_loss, tittle="Loss Epoch")
-    #plot_training(history)
+    # plot_training(history)
     Epoch_plot(lista_epoch_acc, lista_epoch_val_acc,
                lista_epoch_loss, lista_epoch_val_loss)
     plt.show()

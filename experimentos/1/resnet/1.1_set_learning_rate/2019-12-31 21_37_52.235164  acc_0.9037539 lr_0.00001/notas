@@ -1,0 +1,15 @@
+TRAIN_DIR = paths.data_training
+VALIDATION_DIR = paths.data_validation
+BATCH_SIZE = 100  # 25
+HEIGHT = 255
+WIDTH = 255
+NUM_EPOCHS = 3  # 5
+class_list = ["anomalous", "normal"]
+#FC_LAYERS = [1024, 1024]
+FC_LAYERS = [1000]  # cambio-------------------#
+dropout = 0.4
+LEARNING_RATE = 0.00001
+
+//////////////////////////----I N I C I O -----///    2019-12-31 21:37:37.480979
+//////////////////////////------- F I N -------///    2020-01-01 05:44:48.424018
+

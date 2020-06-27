@@ -103,6 +103,22 @@ class Data_augmentation:
         sharp[sharp < 0] = 0
 
         return sharp
+    def sharpen_image_2(self, img, sigma, strength):
+        # Image Median filtering
+        #img_mf = median_filter(img, sigma)
+
+        # Laplacial Calculation
+        lap = cv2.Laplacian(img, cv2.CV_64F)
+
+        # Sharpen the Image
+        sharp = img-strength*lap
+
+        # Saturate Pixels
+
+        sharp[sharp > 255] = 255
+        sharp[sharp < 0] = 0
+
+        return sharp
 
     def image_augment(self, save_path, i):
         '''
@@ -111,23 +127,25 @@ class Data_augmentation:
         '''
         img1 = self.image.copy()
         #img = self.sharpen_image(self.transform_img_and_denoise(img1),sigma=5,strength=0.8)
+        img2 = self.CLAHE(img1, 8)
+        img3 = median_filter(img1, 8)
+        img4 = self.sharpen_image_2(img1, sigma=8, strength=0.3)
+        img5 = self.sharpen_image(img2, sigma=8, strength=0.3)
 
-        img = self.sharpen_image(
-            self.CLAHE(img1,8),
-            sigma=5,
-            strength=0.8
-        )
-        img_crop = self.rotate(img, 0, 1.1)
-        img_rot = self.rotate(img, 4, 1.2)
-        img_rot2 = self.rotate(img, -4, +1.2)
+        #img_crop = self.rotate(img, 0, 1.1)
+        #img_rot = self.rotate(img, 4, 1.2)
+        #img_rot2 = self.rotate(img, -4, +1.2)
 
-        cv2.imwrite(os.path.join(save_path, str(i)+'.jpg'), img)
-        cv2.imwrite(os.path.join(save_path, str(i + 1)+'.jpg'), img_crop)
-        cv2.imwrite(os.path.join(save_path, str(i + 2)+'.jpg'), img_rot)
-        cv2.imwrite(os.path.join(save_path, str(i + 3)+'.jpg'), img_rot2)
+        cv2.imwrite(os.path.join(save_path, str(i + 1)+'_clahe.jpg'), img2)
+        cv2.imwrite(os.path.join(save_path, str(i + 2)+'_mf.jpg'), img3)
+        cv2.imwrite(os.path.join(save_path, str(i + 3)+'_um.jpg'), img4)
+        cv2.imwrite(os.path.join(save_path, str(i + 4)+'_all.jpg'), img5)
+        #cv2.imwrite(os.path.join(save_path, str(i + 1)+'.jpg'), img_crop)
+        #cv2.imwrite(os.path.join(save_path, str(i + 2)+'.jpg'), img_rot)
+        #cv2.imwrite(os.path.join(save_path, str(i + 3)+'.jpg'), img_rot2)
 
 
 def img_aug(root, img, output_path, i):
     raw_image = Data_augmentation(root, img)
     raw_image.image_augment(output_path, i)
-    return 4
+    return 5

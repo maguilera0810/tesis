@@ -39,7 +39,7 @@ class BatchData(Callback):
         for i in self.list_batchs:
             acc = i.get("accuracy")
             if acc == None:
-                i.get("acc")
+                acc = i.get("acc")
             self.file_batch.write((str(acc)+"\t"+str(i.get("loss"))+"\n"))
         self.file_batch.close()
 

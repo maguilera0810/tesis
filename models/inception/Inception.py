@@ -27,14 +27,14 @@ print("//////////////////////////----I N I C I O -----///   ", inicio)
 
 TRAIN_DIR = paths.data_training
 VALIDATION_DIR = paths.data_validation
-BATCH_SIZE = 100  # 25
-HEIGHT = 255
-WIDTH = 255
-NUM_EPOCHS = 3  # 5
+BATCH_SIZE = 15  # 25
+HEIGHT = 224
+WIDTH = 224
+NUM_EPOCHS = 1  # 5
 class_list = ["anomalous", "normal"]
 #FC_LAYERS = [1024, 1024]
-FC_LAYERS = [2048,1000] # cambio-------------------#
-dropout = 0.5
+FC_LAYERS = [1000] # cambio-------------------#
+dropout = 0.4
 LEARNING_RATE = 0.0001#0.005  # 0.000001 #0.00001
 
 
@@ -108,8 +108,6 @@ def build_finetune_model(base_model, dropout, fc_layers, num_classes):
     x = Flatten()(x)
     x = Dense(fc_layers[0], activation='relu')(x)
     x = Dropout(dropout)(x)
-    x = Dense(fc_layers[1], activation='softmax')(x)
-    x = Dropout(dropout)(x)
 
     # New softmax layer
     predictions = Dense(num_classes, activation='softmax')(x)
@@ -130,14 +128,11 @@ finetune_model.compile(
 
 filepath = "./checkpoints/" + "InceptionV3" + "_model_weights.h5"
 checkpoint = ModelCheckpoint(
-    filepath, monitor="acc", verbose=1, mode='max', save_best_only=True)
+    filepath, monitor="accuracy", verbose=1, mode='max', save_best_only=True)
 
-# csv logger
-
-#csv_logger = CSVLogger("./csvlog/" + "InceptionV3" + 'training.log')
 
 batchdata = BatchData(filepath_batch, filepath_epoch, "inception")
-#file = open(f"./batchs_data/dia_{datetime.now()}txt","a")
+
 
 """ lambdacallback = LambdaCallback(
     #on_epoch_begin=lambda epoch, logs: leerfile(epoch),

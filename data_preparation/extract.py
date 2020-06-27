@@ -5,8 +5,8 @@ import numpy as np
 import DataAugmentation as daug
 import rutas_data_preparation as rt
 
-IMAGE_WIDTH = 224
-IMAGE_HEIGHT = 224
+IMAGE_WIDTH = 500
+IMAGE_HEIGHT = 500
 
 cwd = ".."
 
@@ -33,29 +33,28 @@ def video_extract(video, src, num_vid=0, conta_a=0, conta_n=0, n_frames_a=6, n_f
     # length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     if bool(video.type):
         # print('Total Frame Count:', length )
-        while True:
+        while True and frame<5:
             check, img = cap.read()
             res = 'Tipo: %i Video: %i Processed: %i Img_N: %i Img_A: %i' % (
                 0, num_vid, frame, conta_n, conta_a)
             if check:
                 if not checkear(video.tramos_no_usar, fps, frame):
-                    if checkear(video.tramosAnomalos, fps, frame):
+                    if checkear(video.tramosAnomalos, fps, frame) and False:
                         if frame % n_frames_a == 0:
                             # img = cv2.resize(img, (1920 // factor, 1080 // factor))
 
                             img = cv2.resize(img, (IMAGE_WIDTH, IMAGE_HEIGHT))
-                            pat = os.path.join(paths.data_temporal_anomalous,
-                                               str(conta_a) + ".jpg")
+                            pat = os.path.join("temporal", str(conta_n) + "_original.jpg")
+                            cv2.imwrite(pat, img)
+                            conta_a+= 1
                             if aug:
                                 conta_a += daug.img_aug(
                                     pat,
                                     img,
-                                    paths.data_temporal_anomalous,
+                                    "temporal",
                                     conta_a
                                 )
-                            else:
-                                cv2.imwrite(pat, img)
-                                conta_a += 1
+                            #else:
                             t = 1
                             res = 'Tipo: %i Video: %i Processed: %i Img_N: %i Img_A: %i' % (
                                 t, num_vid, frame, conta_n, conta_a)
@@ -65,18 +64,18 @@ def video_extract(video, src, num_vid=0, conta_a=0, conta_n=0, n_frames_a=6, n_f
                             # img = cv2.resize(img, (1920 // factor, 1080 // factor))
                             img = cv2.resize(img, (IMAGE_WIDTH, IMAGE_HEIGHT))
                             pat = os.path.join(
-                                paths.data_temporal_normal, str(conta_n) + ".jpg")
-
+                                "temporal", str(conta_n) + "_original.jpg")
+                            cv2.imwrite(pat, img)
+                            conta_n += 1
                             if aug:
                                 conta_n += daug.img_aug(
                                     pat,
                                     img,
-                                    paths.data_temporal_normal,
+                                    "temporal",
                                     conta_n
                                 )
-                            else:
-                                cv2.imwrite(pat, img)
-                                conta_n += 1
+                            #else:
+                                
                             t = 0
                             res = 'Tipo: %i Video: %i Processed: %i Img_N: %i Img_A: %i' % (
                                 t, num_vid, frame, conta_n, conta_a)
@@ -86,7 +85,7 @@ def video_extract(video, src, num_vid=0, conta_a=0, conta_n=0, n_frames_a=6, n_f
             else:
                 print(res)
                 break
-    else:
+    elif False:
         while True:
             check, img = cap.read()
             res = 'Tipo: %i Video: %i Processed: %i Img_N: %i Img_A: %i' % (

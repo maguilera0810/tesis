@@ -28,10 +28,10 @@ print("//////////////////////////----I N I C I O -----///   ", inicio)
 
 TRAIN_DIR = paths.data_training
 VALIDATION_DIR = paths.data_validation
-BATCH_SIZE = 300  # 100
+BATCH_SIZE = 200  # 100
 HEIGHT = 224
 WIDTH = 224
-NUM_EPOCHS = 3 # 5
+NUM_EPOCHS = 5 # 5
 class_list = ["anomalous", "normal"]
 # FC_LAYERS = [1024, 1024]
 FC_LAYERS = [1024]#[2048, 1024]  # cambio-------------------#
@@ -109,7 +109,7 @@ print(p,"\n8888888888888")
 if prueba:
     filepath = "./checkpoints/" + "FrankensNet" + "_model_weights.h5"
     checkpoint = ModelCheckpoint(
-        filepath, monitor="acc", verbose=1, mode='max', save_best_only=True)
+        filepath, monitor="accuracy", verbose=1, mode='max', save_best_only=True)
 
     filepath_batch = paths.batch_data
     filepath_epoch = paths.epoch_data

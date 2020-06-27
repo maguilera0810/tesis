@@ -201,7 +201,6 @@ def FrankensNet(input_shape=None, classes=2):
 
     x1 = layers.Conv2D(256,3)(x)
     x1 = layers.Conv2D(256,3)(x1)
-    
 
     branch_3 = InceptionModel_B(x, 8)
     branch_3 = InceptionModel_B(branch_3, 9)
@@ -219,9 +218,10 @@ def FrankensNet(input_shape=None, classes=2):
     x2 = layers.AveragePooling2D(name='avrg_pool_final')(branches1)
     x = layers.Concatenate()([x2, x3])
     x = layers.Flatten()(x)
+    
 
     x = layers.Dense(1024, activation='relu', name='fc1')(x)
-    x = layers.Dropout(0.3)(x)
+    x = layers.Dropout(0.4)(x)
 
     predictions = layers.Dense(2, activation='softmax', name='predictions')(x)
 
